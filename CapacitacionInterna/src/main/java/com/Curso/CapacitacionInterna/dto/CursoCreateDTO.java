@@ -4,6 +4,7 @@ import com.Curso.CapacitacionInterna.model.Curso;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,4 +15,5 @@ public class CursoCreateDTO {
     private Integer duracionEstimada;
     private Curso.Nivel nivel;
     private Long instructorId;
+    private List<ModuloCreateDTO> modulos;
 }
