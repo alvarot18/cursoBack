@@ -22,6 +22,9 @@ public class ProgresoModuloService {
     
     @Autowired
     private InscripcionRepository inscripcionRepository;
+    
+    @Autowired
+    private CertificadoService certificadoService;
 
     // Marcar módulo como terminado
     @Transactional
@@ -89,6 +92,14 @@ public class ProgresoModuloService {
             inscripcion.setEstado(Inscripcion.Estado.EN_PROGRESO);
         } else if (porcentajeProgreso == 100) {
             inscripcion.setEstado(Inscripcion.Estado.COMPLETADO);
+            
+            // Generar certificado automáticamente al completar el curso
+            try {
+                certificadoService.generarCertificado(usuarioId, cursoId);
+            } catch (RuntimeException e) {
+                // El certificado ya existe, no hacer nada
+                System.out.println("Certificado ya existe para usuario " + usuarioId + " y curso " + cursoId);
+            }
         }
 
         inscripcionRepository.save(inscripcion);
