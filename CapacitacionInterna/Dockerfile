@@ -1,5 +1,5 @@
-# Usar imagen de OpenJDK para construir y ejecutar
-FROM openjdk:21-jdk-slim
+# Usar imagen de Eclipse Temurin compatible con Oracle OpenJDK 21
+FROM eclipse-temurin:21-jdk
 
 # Establecer el directorio de trabajo
 WORKDIR /app
