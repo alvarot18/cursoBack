@@ -4,6 +4,7 @@ import com.Curso.CapacitacionInterna.dto.InscripcionCreateDTO;
 import com.Curso.CapacitacionInterna.dto.InscripcionDTO;
 import com.Curso.CapacitacionInterna.model.Inscripcion;
 import com.Curso.CapacitacionInterna.service.InscripcionService;
+import com.Curso.CapacitacionInterna.service.ProgresoModuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class InscripcionController {
 
     @Autowired
     private InscripcionService inscripcionService;
+    
+    @Autowired
+    private ProgresoModuloService progresoModuloService;
 
     @PostMapping
     @Operation(summary = "Inscribir usuario a curso", description = "Crea una nueva inscripción de usuario a curso")
@@ -51,8 +55,21 @@ public class InscripcionController {
         return ResponseEntity.ok(inscripciones);
     }
 
+    @PutMapping("/completar-modulo")
+    @Operation(summary = "Completar módulo", description = "Marca un módulo como terminado y actualiza automáticamente el progreso del curso")
+    public ResponseEntity<String> completarModulo(
+            @RequestParam Long usuarioId,
+            @RequestParam Long moduloId) {
+        try {
+            progresoModuloService.completarModulo(usuarioId, moduloId);
+            return ResponseEntity.ok("Módulo completado y progreso actualizado automáticamente");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
     @PutMapping("/progreso")
-    @Operation(summary = "Actualizar progreso", description = "Actualiza el progreso de un usuario en un curso")
+    @Operation(summary = "Actualizar progreso manual", description = "Actualiza manualmente el progreso (para casos especiales)")
     public ResponseEntity<InscripcionDTO> actualizarProgreso(
             @RequestParam Long usuarioId,
             @RequestParam Long cursoId,
