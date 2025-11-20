@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/certificados")
+@CrossOrigin(origins = "*")
 @Tag(name = "Certificado", description = "Controlador para gestión de certificados")
 public class CertificadoController {
 

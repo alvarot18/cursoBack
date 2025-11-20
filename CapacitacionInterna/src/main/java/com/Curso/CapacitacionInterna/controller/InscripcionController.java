@@ -14,7 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/inscripciones")
-@Tag(name = "Inscripcion", description = "Controlador para gestión de inscripciones de usuarios a cursos")
+@CrossOrigin(origins = "*")
+@Tag(name = "Inscripcion", description = "Controlador para gestión de inscripciones")
 public class InscripcionController {
 
     @Autowired

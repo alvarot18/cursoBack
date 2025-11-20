@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cursos")
+@CrossOrigin(origins = "*")
 @Tag(name = "Curso", description = "Controlador para gestión de cursos")
 public class CursoController {
 

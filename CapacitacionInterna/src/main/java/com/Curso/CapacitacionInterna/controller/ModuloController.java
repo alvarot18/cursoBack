@@ -11,7 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/modulos")
-@Tag(name = "Modulo", description = "Controlador para gestión de módulos de cursos")
+@CrossOrigin(origins = "*")
+@Tag(name = "Modulo", description = "Controlador para gestión de módulos")
 public class ModuloController {
 
     @Autowired
