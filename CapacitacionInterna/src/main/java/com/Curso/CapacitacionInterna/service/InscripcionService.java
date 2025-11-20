@@ -123,6 +123,11 @@ public class InscripcionService {
                 inscripcion.getUsuario().getNombre(),
                 inscripcion.getCurso().getId(),
                 inscripcion.getCurso().getTitulo(),
+                inscripcion.getCurso().getDescripcion(),
+                inscripcion.getCurso().getDuracionEstimada(),
+                inscripcion.getCurso().getNivel().toString(),
+                inscripcion.getCurso().getInstructor().getNombre(),
+                inscripcion.getCurso().getActivo(),
                 inscripcion.getProgreso(),
                 inscripcion.getFechaInscripcion(),
                 inscripcion.getEstado()

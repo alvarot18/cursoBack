@@ -15,6 +15,11 @@ public class InscripcionDTO {
     private String usuarioNombre;
     private Long cursoId;
     private String cursoTitulo;
+    private String cursoDescripcion;
+    private Integer cursoDuracionEstimada;
+    private String cursoNivel;
+    private String cursoInstructorNombre;
+    private Boolean cursoActivo;
     private Integer progreso;
     private LocalDateTime fechaInscripcion;
     private Inscripcion.Estado estado;
