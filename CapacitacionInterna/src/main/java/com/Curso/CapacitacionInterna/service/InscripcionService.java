@@ -4,12 +4,15 @@ import com.Curso.CapacitacionInterna.dto.InscripcionCreateDTO;
 import com.Curso.CapacitacionInterna.dto.InscripcionDTO;
 import com.Curso.CapacitacionInterna.model.Curso;
 import com.Curso.CapacitacionInterna.model.Inscripcion;
+import com.Curso.CapacitacionInterna.model.ProgresoModulo;
 import com.Curso.CapacitacionInterna.model.Usuario;
 import com.Curso.CapacitacionInterna.repository.CursoRepository;
 import com.Curso.CapacitacionInterna.repository.InscripcionRepository;
+import com.Curso.CapacitacionInterna.repository.ProgresoModuloRepository;
 import com.Curso.CapacitacionInterna.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,9 @@ public class InscripcionService {
     
     @Autowired
     private CursoRepository cursoRepository;
+    
+    @Autowired
+    private ProgresoModuloRepository progresoModuloRepository;
 
     // Inscribir usuario a curso
     public InscripcionDTO inscribirUsuario(InscripcionCreateDTO inscripcionCreateDTO) {
@@ -108,10 +114,18 @@ public class InscripcionService {
     }
 
     // Eliminar inscripción
+    @Transactional
     public void eliminarInscripcion(Long usuarioId, Long cursoId) {
         Inscripcion inscripcion = inscripcionRepository.findByUsuarioIdAndCursoId(usuarioId, cursoId)
                 .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
         
+        // Primero eliminar todos los registros de progreso de módulos asociados
+        List<ProgresoModulo> progresosModulos = progresoModuloRepository.findByUsuarioIdAndModuloCursoId(usuarioId, cursoId);
+        if (!progresosModulos.isEmpty()) {
+            progresoModuloRepository.deleteAll(progresosModulos);
+        }
+        
+        // Luego eliminar la inscripción
         inscripcionRepository.delete(inscripcion);
     }
 

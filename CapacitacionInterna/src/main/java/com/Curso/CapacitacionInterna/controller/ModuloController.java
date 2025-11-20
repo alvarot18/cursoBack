@@ -20,8 +20,10 @@ public class ModuloController {
 
     @GetMapping("/curso/{cursoId}")
     @Operation(summary = "Obtener módulos por curso", description = "Retorna los módulos de un curso ordenados")
-    public ResponseEntity<List<ModuloDTO>> obtenerModulosPorCurso(@PathVariable Long cursoId) {
-        List<ModuloDTO> modulos = moduloService.obtenerModulosPorCurso(cursoId);
+    public ResponseEntity<List<ModuloDTO>> obtenerModulosPorCurso(
+            @PathVariable Long cursoId,
+            @RequestParam(required = false) Long usuarioId) {
+        List<ModuloDTO> modulos = moduloService.obtenerModulosPorCursoConProgreso(cursoId, usuarioId);
         return ResponseEntity.ok(modulos);
     }
 
