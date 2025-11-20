@@ -61,7 +61,12 @@ public class UsuarioService {
 
         usuario.setNombre(usuarioCreateDTO.getNombre());
         usuario.setEmail(usuarioCreateDTO.getEmail());
-        usuario.setPassword(usuarioCreateDTO.getPassword());
+        
+        // Solo actualizar password si se proporciona uno nuevo
+        if (usuarioCreateDTO.getPassword() != null && !usuarioCreateDTO.getPassword().trim().isEmpty()) {
+            usuario.setPassword(usuarioCreateDTO.getPassword());
+        }
+        
         usuario.setRol(usuarioCreateDTO.getRol());
         usuario.setDepartamento(usuarioCreateDTO.getDepartamento());
 
