@@ -141,10 +141,19 @@ public class CursoService {
     }
 
     // Eliminar curso permanentemente
+    @Transactional
     public void eliminarCursoPermanente(Long id) {
         if (!cursoRepository.existsById(id)) {
             throw new RuntimeException("Curso no encontrado");
         }
+        
+        // Primero eliminar todos los módulos asociados al curso
+        List<Modulo> modulos = moduloRepository.findByCursoIdOrderByOrden(id);
+        if (!modulos.isEmpty()) {
+            moduloRepository.deleteAll(modulos);
+        }
+        
+        // Luego eliminar el curso
         cursoRepository.deleteById(id);
     }
 
